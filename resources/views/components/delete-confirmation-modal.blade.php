@@ -10,7 +10,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <form action="{{ route("$resourceName" . "s.destroy", $resource) }}" class="d-inline" method="POST">
+                <form action="{{ route($resourceName == 'pharmacy' ? 'pharmacies.destroy' : 'products.destroy', $resource) }}" class="d-inline" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Delete</button>

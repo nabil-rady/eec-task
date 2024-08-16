@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\PharmacyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('products', ProductsController::class);
+Route::resource('pharmacies', PharmacyController::class);
 
 Route::get('/', function () {
     return view('welcome');
