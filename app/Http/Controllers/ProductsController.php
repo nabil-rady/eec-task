@@ -75,7 +75,7 @@ class ProductsController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('products.edit', compact('product'));
     }
 
     /**
@@ -87,7 +87,30 @@ class ProductsController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $data = $request->validate([
+            'title' => ['required', 'min:3', 'max:255'],
+            'price' => ['required', 'integer', 'min:1', 'max:1000'],
+            'quantity' => ['required', 'integer', 'min:0', 'max:1000'],
+            'description' => ['required', 'min:3', 'max:255'],
+            'image' => ['image'],
+        ]);
+
+        if(request('image')){
+            $path = request('image')->store('uploads', 'public');
+
+            $image = Image::make(public_path("storage/$path"))->fit(640, 480);
+            $image->save();
+            
+            $path = '/storage/' . $path;
+        }
+
+        else{
+            $path = $product->image;
+        }
+
+        $product->update(array_merge($data, ['image' => $path]));
+
+        return redirect('/products/' . $product->id);
     }
 
     /**
