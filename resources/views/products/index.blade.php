@@ -25,16 +25,14 @@
                     <td>
                         <a href="{{ route('products.show', $product) }}" class="btn btn-info">View</a>
                         <a href="{{ route('products.edit', $product) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('products.destroy', $product) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal{{$product->id}}">
+                            Delete
+                        </button>
                     </td>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
-
+                <x-delete-confirmation-modal resourceName="product" :resource="$product" />
+                @endforeach
+            </tbody>
+        </table>
     {{ $products->links() }}
 @endsection

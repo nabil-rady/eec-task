@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "bootstrap": "^5.3.3",
+        "popper.js": "^1.16.1",
         "sass": "^1.77.8",
         "sass-loader": "^16.0.0"
     }

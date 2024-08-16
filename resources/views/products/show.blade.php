@@ -20,12 +20,11 @@
             <h3>Action</h3>
             <div class="d-flex gap-2">
                 <a href="{{ route('products.edit', $product) }}" class="btn btn-warning">Edit</a>
-                <form action="{{ route('products.destroy', $product) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal{{$product->id}}">
+                    Delete
+                </button>
             </div>
         </div>
+        <x-delete-confirmation-modal resourceName="product" :resource="$product" />
     </div>
 @endsection
