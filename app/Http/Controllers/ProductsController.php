@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class ProductsController extends Controller
 {
@@ -26,7 +27,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -37,7 +38,22 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => ['required', 'min:3', 'max:255'],
+            'price' => ['required', 'integer', 'min:1', 'max:1000'],
+            'quantity' => ['required', 'integer', 'min:0', 'max:1000'],
+            'image' => ['required', 'image'],
+            'description' => ['required', 'min:3', 'max:255']
+        ]);
+
+        $path = request('image')->store('uploads', 'public');
+
+        $image = Image::make(public_path("storage/$path"))->fit(640, 480);
+        $image->save();
+
+        $product = Product::create(array_merge($data, ['image' => '/storage/' . $path]));
+
+        return redirect('/products/' . $product->id);
     }
 
     /**
