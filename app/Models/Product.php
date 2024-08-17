@@ -5,15 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Ramsey\Uuid\Type\Integer;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
+    use Searchable;
     use HasFactory;
 
     protected $table = 'product';
     protected $guarded = [];
     
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+        ];
+    }
+
     public function pharmacies(): BelongsToMany{
         return $this->belongsToMany(Pharmacy::class, 'pharmacy_product')
             ->withPivot('price', 'quantity');

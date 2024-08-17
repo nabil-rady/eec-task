@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProductsAPIController;
 use App\Http\Controllers\PharmacyAPIController;
+use App\Http\Controllers\SearchProductController;
+use App\Http\Controllers\SearchPharmacyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/products/search', SearchProductController::class);
+Route::get('/pharmacies/search', SearchPharmacyController::class);
 
 Route::apiResource('products', ProductsAPIController::class);
 Route::apiResource('pharmacies', PharmacyAPIController::class);
