@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PharmacyController;
+use App\Http\Controllers\SearchProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/products/search', SearchProductController::class);
 
 Route::resource('products', ProductsController::class);
 Route::resource('pharmacies', PharmacyController::class);

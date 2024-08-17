@@ -16,8 +16,10 @@ class SearchProductController extends Controller
     public function __invoke(Request $request)
     {
         if(!$request->has('q'))
-            return response()->json([], 200);
+            return view('products.search', ['products' => []]);
 
-        return Product::search($request->input('q'))->paginate(10);
+        $products =  Product::search($request->input('q'))->paginate(10);
+        
+        return view('products.search', compact('products'));
     }
 }
