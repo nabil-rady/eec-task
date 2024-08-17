@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form action="{{ route('pharmacies.update', $pharmacy->id) }}" enctype="multipart/form-data" method="POST">
+    <form class="pb-3" action="{{ route('pharmacies.update', $pharmacy->id) }}" enctype="multipart/form-data" method="POST">
         @csrf
         @method('PUT')
 

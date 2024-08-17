@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div>
+    <div class="d-flex align-items-center">
         <h1>Pharmacies</h1>
-        <a href="{{ route('pharmacies.create') }}" class="btn btn-primary mb-3">Create New Pharmacy</a>
+        <a href="{{ route('pharmacies.create') }}" class="ms-auto btn btn-primary">Create New Pharmacy</a>
     </div>
     <table class="table">
         <thead>

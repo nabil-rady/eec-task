@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-flex">
-        <div style="flex-basis: 0">
+    <div class="d-md-flex">
+        <div class="mb-3">
             <div>
-                <img src="{{ $product->image }}" alt="Product Image">
+                <img src="{{ $product->image }}" style="max-width: 640px;" class="w-75 d-block mx-auto" alt="Product Image">
             </div>
         </div>
         <div class="px-3">

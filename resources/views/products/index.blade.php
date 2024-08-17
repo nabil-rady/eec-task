@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div>
+    <div class="d-flex align-items-center">
         <h1>Products</h1>
-        <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Create New Product</a>
+        <a href="{{ route('products.create') }}" class="ms-auto btn btn-primary">Create New Product</a>
     </div>
     <table class="table">
         <thead>
