@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductsAPIController;
+use App\Http\Controllers\PharmacyAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource('products', ProductsAPIController::class);
+Route::apiResource('pharmacies', PharmacyAPIController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
