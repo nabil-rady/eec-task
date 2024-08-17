@@ -9,10 +9,6 @@
         </div>
         <div class="px-3">
             <h2>{{ $product->title }}</h2>
-            <ul class="list-unstyled">
-                <li>Price: {{ $product->price }}</li>
-                <li>Quantity: {{ $product->quantity }}</li>
-            </ul>
             <h3>Description</h3>
             <p>
                 {{ $product->description }}  
@@ -24,6 +20,28 @@
                     Delete
                 </button>
             </div>
+            @if(!$product->pharmacies->isEmpty())
+                <table class="table mt-3">
+                    <thead>
+                    <tr>
+                        <th scope="col">Pharmacy</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($product->pharmacies as $pharmacy)
+                            <tr>
+                                <td><a href="/pharmacies/{{$pharmacy->id}}">{{ $pharmacy->name }}</a></td>
+                                <td>{{ $pharmacy->pivot->quantity }}</td>
+                                <td>{{ $pharmacy->pivot->price }} LE</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                No products found.
+            @endif
         </div>
         <x-delete-confirmation-modal resourceName="product" :resource="$product" />
     </div>

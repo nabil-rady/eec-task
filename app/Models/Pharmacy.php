@@ -14,6 +14,7 @@ class Pharmacy extends Model
     protected $guarded = [];
     
     public function products(): BelongsToMany{
-        return $this->belongsToMany(Product::class, 'pharmacy_product');
+        return $this->belongsToMany(Product::class, 'pharmacy_product')
+            ->withPivot('price', 'quantity');
     }
 }

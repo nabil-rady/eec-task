@@ -23,8 +23,6 @@ class ProductFactory extends Factory
             'title' => Str::random(10),
             'description' => $this->faker->text(),
             'image' => $this->faker->imageUrl($width = 640, $height = 480),
-            'price' => random_int(10, 300),
-            'quantity' => random_int(1, 1000),
         ];
     }
 }

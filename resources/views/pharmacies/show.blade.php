@@ -21,8 +21,8 @@
                         <tr>
                             <th>ID</th>
                             <th>Title</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
+                            <th>Total Quantity</th>
+                            <th>Best Price</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -31,8 +31,8 @@
                             <tr>
                                 <td>{{ $product->id }}</td>
                                 <td>{{ $product->title }}</td>
-                                <td>{{ $product->price }} LE</td>
-                                <td>{{ $product->quantity }}</td>
+                                <td>{{ $product->total_quantity }}</td>
+                                <td>{{ $product->best_price }} LE</td>
                                 <td>
                                     <a href="{{ route('products.show', $product) }}" class="btn btn-info">View</a>
                                     <a href="{{ route('products.edit', $product) }}" class="btn btn-warning">Edit</a>

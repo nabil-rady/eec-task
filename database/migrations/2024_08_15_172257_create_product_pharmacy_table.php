@@ -18,6 +18,8 @@ class CreateProductPharmacyTable extends Migration
             $table->timestamps();
             $table->foreignId('product_id')->constrained('product')->onDelete('cascade');
             $table->foreignId('pharmacy_id')->constrained('pharmacy')->onDelete('cascade');
+            $table->integer('quantity');
+            $table->integer('price');
         });
     }
 
