@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
@@ -40,18 +42,45 @@ class ProductsController extends Controller
     {
         $data = $request->validate([
             'title' => ['required', 'min:3', 'max:255'],
-            'price' => ['required', 'integer', 'min:1', 'max:1000'],
-            'quantity' => ['required', 'integer', 'min:0', 'max:1000'],
+            'description' => ['required', 'min:3', 'max:255'],
+
+            'prices' => ['required', 'array', 'min:1'],
+            'pirces.*' => ['integer', 'min:1', 'max:1000'],
+            'quantities' => ['required', 'array', 'min:1'],
+            'quantities.*' => ['integer', 'min:0', 'max:1000'],
+            'pharmacies' => ['required', 'array', 'min:1'],
+            'quantities.*' => ['integer'],
+
             'image' => ['required', 'image'],
-            'description' => ['required', 'min:3', 'max:255']
         ]);
+
+        $pharmacies = Pharmacy::whereIn("id", $data['pharmacies'])->get();
+        
+        if(count($pharmacies) != count($data['pharmacies'])){
+            return view('products.create');
+        }
 
         $path = request('image')->store('uploads', 'public');
 
         $image = Image::make(public_path("storage/$path"))->fit(640, 480);
         $image->save();
 
-        $product = Product::create(array_merge($data, ['image' => '/storage/' . $path]));
+        $product = Product::create([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'image' => '/storage/' . $path
+        ]);
+
+        $pivotData = [];
+
+        for ($i = 0; $i < count($pharmacies); $i++) {
+            $pivotData[$pharmacies[$i]['id']] = [
+                'price' => $data['prices'][$i],
+                'quantity' => $data['quantities'][$i],
+            ];
+        }
+
+        $product->pharmacies()->attach($pivotData);   
 
         return redirect('/products/' . $product->id);
     }
@@ -89,9 +118,15 @@ class ProductsController extends Controller
     {
         $data = $request->validate([
             'title' => ['required', 'min:3', 'max:255'],
-            'price' => ['required', 'integer', 'min:1', 'max:1000'],
-            'quantity' => ['required', 'integer', 'min:0', 'max:1000'],
             'description' => ['required', 'min:3', 'max:255'],
+            
+            'prices' => ['required', 'array', 'min:1'],
+            'pirces.*' => ['integer', 'min:1', 'max:1000'],
+            'quantities' => ['required', 'array', 'min:1'],
+            'quantities.*' => ['integer', 'min:0', 'max:1000'],
+            'pharmacies' => ['required', 'array', 'min:1'],
+            'quantities.*' => ['integer'],
+            
             'image' => ['image'],
         ]);
 
@@ -108,7 +143,28 @@ class ProductsController extends Controller
             $path = $product->image;
         }
 
-        $product->update(array_merge($data, ['image' => $path]));
+        $pharmacies = Pharmacy::whereIn("id", $data['pharmacies'])->get();
+        
+        if(count($pharmacies) != count($data['pharmacies'])){
+            return view('products.create');
+        }
+
+        $product->update([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'image' => $path
+        ]);
+
+        $pivotData = [];
+
+        for ($i = 0; $i < count($pharmacies); $i++) {
+            $pivotData[$pharmacies[$i]['id']] = [
+                'price' => $data['prices'][$i],
+                'quantity' => $data['quantities'][$i],
+            ];
+        }
+
+        $product->pharmacies()->sync($pivotData);
 
         return redirect('/products/' . $product->id);
     }

@@ -18,6 +18,13 @@ class SearchPharmacyController extends Controller
         if(!$request->has('q'))
             return response()->json([], 200);
 
-        return Pharmacy::search($request->input('q'))->limit(10);
+        return response()->json([
+            "results" =>  Pharmacy::search($request->input('q'))->take(10)->get()->map(function($item) {
+                return [
+                    "id" => $item->id,
+                    "text" => $item->name,
+                ];
+            }),
+        ]);
     }
 }

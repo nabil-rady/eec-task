@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>EEC - Task</title>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+        <script src="{{ asset('js/app.js') }}"></script>
     </head>
     <body>
         <nav class="flex p-3 shadow-xl">
@@ -14,6 +15,5 @@
         <main class="container">
             @yield('content')
         </main>
-        <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>
