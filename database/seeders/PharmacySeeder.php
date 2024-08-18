@@ -40,5 +40,25 @@ class PharmacySeeder extends Seeder
                 }
             )
             ->create();
+
+        $products = Product::take(100)->get();
+
+        foreach($products as $product){
+            $pharmaciesIds = Pharmacy::
+                inRandomOrder()
+                ->take(rand(3, 5))
+                ->pluck('id')
+                ->toArray();
+
+            $attachData = array_reduce($pharmaciesIds, function($carry, $id){
+                $carry[$id] = [
+                    'price' => rand(1, 1000),
+                    'quantity' => rand(1, 1000),
+                ];
+                return $carry;
+            }, []);
+                
+            $product->pharmacies()->attach($attachData);
+        }
     }
 }
