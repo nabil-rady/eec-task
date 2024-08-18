@@ -1,0 +1,51 @@
+version: "3.3"
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: app
+        restart: unless-stopped
+        tty: true
+        networks:
+            - eec
+        command: ["sh", "-c", "php artisan migrate:fresh && php-fpm"]
+        user: "www-data"
+        volumes:
+            - asset-volume:/var/www/app/storage/app/public
+        depends_on:
+            - db
+    nginx:
+        image: nginx:alpine
+        container_name: nginx
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "8000:80"
+        volumes:
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - ./public:/var/www/app/public
+            - asset-volume:/var/www/app/public/storage
+        depends_on:
+            - app
+        networks:
+            - eec
+
+    db:
+        image: mysql:8.0
+        container_name: db
+        environment:
+            MYSQL_ROOT_PASSWORD: admin
+            MYSQL_DATABASE: eec
+            MYSQL_USER: eec
+            MYSQL_PASSWORD: admin
+        networks:
+            - eec
+
+networks:
+    eec:
+        driver: bridge
+
+volumes:
+    asset-volume:
