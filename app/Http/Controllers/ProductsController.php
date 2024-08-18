@@ -93,6 +93,7 @@ class ProductsController extends Controller
      */
     public function show(Product $product)
     {
+        $product->load('pharmacies');
         return view('products.show', compact('product'));
     }
 
@@ -104,6 +105,7 @@ class ProductsController extends Controller
      */
     public function edit(Product $product)
     {
+        $product->load('pharmacies');
         return view('products.edit', compact('product'));
     }
 
