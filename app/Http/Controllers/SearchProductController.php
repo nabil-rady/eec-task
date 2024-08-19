@@ -18,7 +18,7 @@ class SearchProductController extends Controller
         if(!$request->has('q'))
             return view('products.search', ['products' => []]);
 
-        $products =  Product::search($request->input('q'))->paginate(10);
+        $products =  Product::search($request->input('q'))->fastPaginate(10);
         
         return view('products.search', compact('products'));
     }

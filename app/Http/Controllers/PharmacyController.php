@@ -14,7 +14,7 @@ class PharmacyController extends Controller
      */
     public function index()
     {
-        $pharmacies = Pharmacy::paginate(10);
+        $pharmacies = Pharmacy::fastPaginate(10);
 
         return view('pharmacies.index', compact('pharmacies'));
     }
@@ -55,7 +55,7 @@ class PharmacyController extends Controller
      */
     public function show(Pharmacy $pharmacy)
     {
-        $products = $pharmacy->products()->paginate(10);
+        $products = $pharmacy->products()->fastPaginate(10);
 
         return view('pharmacies.show', compact('pharmacy', 'products'));
     }

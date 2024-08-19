@@ -17,7 +17,7 @@ class ProductsAPIController extends Controller
      */
     public function index()
     {
-        return Product::paginate(10);
+        return Product::fastPaginate(10);
     }
 
     /**

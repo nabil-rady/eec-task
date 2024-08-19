@@ -14,7 +14,7 @@ class PharmacyAPIController extends Controller
      */
     public function index()
     {
-        return Pharmacy::paginate(10);
+        return Pharmacy::fastPaginate(10);
     }
 
     /**
@@ -43,7 +43,7 @@ class PharmacyAPIController extends Controller
      */
     public function show(Pharmacy $pharmacy)
     {
-        $products = $pharmacy->products()->paginate(10);
+        $products = $pharmacy->products()->fastPaginate(10);
 
         return [
             'pharmacy' => $pharmacy,
