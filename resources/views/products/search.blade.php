@@ -4,7 +4,7 @@
     <div>
         <h1>Search Results</h1>
     </div>
-    @if($products->isEmpty())
+    @if($products == null)
         <p>No products found.</p>
     @else
         <table class="table">
@@ -36,6 +36,6 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $products->links() }}
     @endif
-    {{ $products->links() }}
 @endsection
