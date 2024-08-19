@@ -6,7 +6,7 @@ A Simple CRUD app built using Laravel, jQuery and Bootstrap.
 
 You can either run it locally or using docker-compose.
 
-### To run the app susing docker
+### To run the app using docker
 
 Make sure you have docker and docker compose installed and then run the following command:
 
@@ -18,12 +18,14 @@ Then you should be able to browse the app on localhost:8000.
 
 ### To run the app locally
 
-You need to install php >= 7.4, composer and php-gd. Then, run:
+You need to install php >= 7.4, composer and php-gd and create a databse file at database/database.sqlite. Copy the contents of `.env.example` into a file named `.env`. Then, run:
 
 ```
 composer install
 php artisan migrate
 php artisan storage:link
+php artisan key:generate
+php artisan config:cache
 php artisan serve
 ```
 
